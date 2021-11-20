@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 public class StudentView {
     GridPane startview;
+
     //Buttons
     Button ExitBtn;
     Button getGradesBtn;
@@ -33,11 +34,13 @@ public class StudentView {
     TextArea courseTextfield;
     Text courseName;
 
+    // Constructor. Creates a startview and adds all the elements using CreateView.
     public StudentView(){
         startview=new GridPane();
         CreateView();
     }
 
+    // Creates all the elements for the view
     private void CreateView() {
         startview.setMinSize(300, 200);
         startview.setPadding(new Insets(10, 10, 10, 10));
@@ -81,12 +84,17 @@ public class StudentView {
         startview.add(courseTextfield,1,13,15,10);
     }
 
+    // Updates the ComboBoxes to contain the content of the observable list.
+    // This method is used in the StudentController
     public void configure(){
         studentNamesComB.setItems(studentNames);
         studentNamesComB.getSelectionModel().selectFirst();
 
         courseIDComB.setItems(courseIDs);
     }
+
+    // Method to export the startview, including all child-objects.
+    // This method is used in Main
     public Parent asParent(){
         return  startview;
     }

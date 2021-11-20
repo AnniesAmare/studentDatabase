@@ -2,28 +2,36 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class StudentModel {
-    Connection connection=null;
-    String url=null;
-    Statement stmt=null;
-    PreparedStatement pstmt=null;
-    ResultSet rs=null;
+    //Initialize SQL variables
+    Connection connection = null;
+    String url = null;
+    Statement stmt = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
 
+    // Constructor
+    // StudentModel is created using the url to the database
     public StudentModel (String url) {
         this.url = url;
     }
 
+    // Method to establish a connection between database and StudentModel
     public void connectToStudentData() throws SQLException {
         connection = DriverManager.getConnection(url);
     }
 
+    // Method to close connection between StudentModel and database
     public void closeStudentDataConnection() throws  SQLException{
         if(connection!= null)
             connection.close();
     }
+
+    // Method to create a statement using the database connection
     public void createStatement() throws SQLException{
         this.stmt=connection.createStatement();
     }
 
+    // Executes an SQL query for student names, and returns them as a string array
     public ArrayList<String> SQLQueryStudentNames() throws SQLException{
         ArrayList<String> students=new ArrayList<>();
         String sql = "SELECT FirstName, LastName FROM Students ORDER BY FirstName;";
@@ -36,6 +44,7 @@ public class StudentModel {
         return students;
     }
 
+    // Executes an SQL query for course IDs, and returns them as an integer array
     public ArrayList<Integer> SQLQueryCourseIDs() throws SQLException{
         ArrayList<Integer> courses=new ArrayList<>();
         String sql = "SELECT CourseID FROM Courses ORDER BY CourseID;";
@@ -47,6 +56,7 @@ public class StudentModel {
         return courses;
     }
 
+    // Executes a prepared statement query for course names using course ID as an input
     public String QueryForCourseName(Integer ID) throws SQLException{
         String sql = "SELECT (CourseName ||':'|| Year) AS Course FROM Courses WHERE CourseID = ?;";
         pstmt=connection.prepareStatement(sql);
@@ -56,6 +66,8 @@ public class StudentModel {
         return courseName;
     }
 
+    // Executes a prepared statement query for grades using a students full name as an input
+    // Uses an array of StudentInfo objects. StudentInfo contains: StudentID, Name, Course and Grade.
     public ArrayList<StudentInfo> QueryForStudentGrades(String fullName) throws SQLException{
         ArrayList<StudentInfo> StudentInfos = new ArrayList<>();
         String sql =
@@ -84,6 +96,8 @@ public class StudentModel {
         return StudentInfos;
     }
 
+    // Executes a prepared statement query for grade average using a students full name as an input
+    // Uses a StudentInfo-object, which contains: StudentId, Name, Course and Grade
     public StudentInfo QueryForStudentAverage(String fullName) throws SQLException{
         String sql =
                 "SELECT S.StudentID, FirstName, LastName, AVG(Grade) AS Grade\n" +
@@ -102,6 +116,8 @@ public class StudentModel {
         return student;
     }
 
+    // Executes a prepared statement query for grades using a students full name as an input
+    // Uses a courseInfo-object. CourseInfo contains: CourseID, teacher name and grade average
     public CourseInfo QueryForCourseAverage(Integer courseID) throws SQLException{
         String sql = "SELECT C.CourseID, (FirstName ||' '|| LastName) AS Name, AVG(Grade) AS Average FROM Grades\n" +
                 "    JOIN Courses C on Grades.CourseID = C.CourseID\n" +
