@@ -37,6 +37,7 @@ public class StudentView {
         startview=new GridPane();
         CreateView();
     }
+
     private void CreateView() {
         startview.setMinSize(300, 200);
         startview.setPadding(new Insets(10, 10, 10, 10));
@@ -79,6 +80,7 @@ public class StudentView {
         courseTextfield = new TextArea();
         startview.add(courseTextfield,1,13,15,10);
     }
+
     public void configure(){
         studentNamesComB.setItems(studentNames);
         studentNamesComB.getSelectionModel().selectFirst();

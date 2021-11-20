@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
-
 import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,10 +43,7 @@ public class StudentController {
                 System.out.println(l.getMessage());
             }
         });
-
         view.configure();
-
-
     }
 
     public ObservableList<String> getStudentNames() throws SQLException {

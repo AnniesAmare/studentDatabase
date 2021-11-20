@@ -8,13 +8,14 @@ public class StudentModel {
     PreparedStatement pstmt=null;
     ResultSet rs=null;
 
-    StudentModel (String url) {
+    public StudentModel (String url) {
         this.url = url;
     }
 
     public void connectToStudentData() throws SQLException {
         connection = DriverManager.getConnection(url);
     }
+
     public void closeStudentDataConnection() throws  SQLException{
         if(connection!= null)
             connection.close();
@@ -115,5 +116,4 @@ public class StudentModel {
         return course;
     }
 }
-
 
